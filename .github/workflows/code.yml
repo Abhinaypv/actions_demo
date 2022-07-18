@@ -14,7 +14,7 @@ jobs:
       - name: Checkout the files
         uses: actions/checkout@v2
       - name: ssh deploy
-        uses: redminds/ssh-scp-deploy@main
+        uses: marcodallasanta/ssh-scp-deploy
         with:
           local: './'                                                  
           remote: '/var/www/html'                                                 

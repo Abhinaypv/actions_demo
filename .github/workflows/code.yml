@@ -1,0 +1,29 @@
+name: ec2-deployment
+
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  deploy:
+    name: Deploy to EC2 on master branch push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the files
+        uses: actions/checkout@v2
+      - name: ssh deploy
+        uses: redminds/ssh-scp-deploy@main
+        with:
+          local: './'                                                  
+          remote: '/var/www/html'                                                 
+          host: ${{secrets.REMOTE_HOST}}                                     
+          port: ${{secrets.PORT}}                                      
+          user: ${{secrets.REMOTE_USER}}                                      
+          password: ${{secrets.PASSWORD}}                               
+          key: ${{secrets.SERVER_SSH_KEY}}                                         
+          pre_upload: echo "This will be executed before the upload!!"  
+          post_upload: echo "This will be executed after the upload!"  
+          ssh_options: -oStrictHostKeyChecking=no                     
+          scp_options: -v
